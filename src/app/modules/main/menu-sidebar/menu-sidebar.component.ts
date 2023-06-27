@@ -71,7 +71,7 @@ export const MENU = [
   {
     name: 'Dashboard',
     iconClasses: 'fas fa-tachometer-alt',
-    path: ['/'],
+    path: ['main/admin'],
     allowed: false
   },
   {
@@ -82,13 +82,13 @@ export const MENU = [
       {
         name: 'Roles',
         iconClasses: 'far fa-circle',
-        path: ['/Roles'],
+        path: ['../../main/admin/Roles'],
         allowed: false
       },
       {
         name: 'Usuarios',
         iconClasses: 'far fa-circle',
-        path: ['/Usuarios'],
+        path: ['../../main/admin/Usuarios'],
         allowed: false
       }
     ]
@@ -96,31 +96,31 @@ export const MENU = [
   {
     name: 'Empleados',
     iconClasses: 'far fas fa-user-alt',
-    path: ['/Empleados'],
+    path: ['main/admin/Empleados'],
     allowed: false
   },
   {
     name: 'Clientes',
     iconClasses: 'far fas fa-user-friends',
-    path: ['/Clientes'],
+    path: ['main/admin/Clientes'],
     allowed: false
   },
   {
     name: 'Calendario',
     iconClasses: 'far fa-calendar-alt',
-    path: ['/Calendario'],
+    path: ['main/admin/Calendario'],
     allowed: false
   },
   {
     name: 'Paquetes',
     iconClasses: 'far fa-image',
-    path: ['/Paquetes'],
+    path: ['main/admin/Paquetes'],
     allowed: false
   },
   {
     name: 'Pedidos',
     iconClasses: 'fas fa-columns',
-    path: ['/Pedidos'],
+    path: ['main/admin/Pedidos'],
     allowed: false
   }
 ];

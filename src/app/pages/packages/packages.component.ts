@@ -1,9 +1,11 @@
 import { Package } from '@/models/package';
-import { EditStatusPackageRequest, GetAllPackagesRequest, OpenModalCreatePackage, OpenModalDetailsPackage } from '@/store/ui/actions';
+import { ChangeStatusPackageRequest, GetAllPackagesRequest, OpenModalCreatePackage, OpenModalDetailsPackage } from '@/store/ui/actions';
 import { AppState } from '@/store/state';
 import { Component, OnInit, PipeTransform } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
+
 import { UiState } from '@/store/ui/state';
 
 interface State {
@@ -74,8 +76,44 @@ export class PackagesComponent implements OnInit {
       this.filteredPackagesList = this.filteredPackagesList.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
     }
   }
-  disablePackage(pack){
-    this.store.dispatch(new EditStatusPackageRequest(pack))
+
+
+  disablePackage(pack:Package){
+    var text1 = ""
+    var text2 = ""
+    if(pack.status){
+      text1 = "inhabilitar"
+      text2 = "Inhabilitado"
+    }else{
+      text1 = "habilitar"
+      text2 = "Habilitado"
+    }
+    Swal.fire({
+      title: '¿Estás seguro de '+text1+' el paquete '+pack.name+'?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si, '+text1,
+      reverseButtons: true,
+      customClass: {
+        confirmButton: 'swal2-confirm-right',
+        cancelButton: 'swal2-cancel-left'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.store.dispatch(new ChangeStatusPackageRequest(pack))
+
+        Swal.fire(
+          text2 + ' con éxito.'
+        ).then(() => {
+          setTimeout(() => {
+            window.location.reload();
+          }, 0);
+        });
+      }
+    })
   }
 
   get page() {

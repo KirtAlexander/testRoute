@@ -16,15 +16,16 @@ import {
     EDIT_PACKAGE_REQUEST,
     OPEN_MODAL_DETAILS_PACKAGE,
     GET_ONE_PACKAGES_REQUEST,
-    EditStatusPackageRequest,
-    EditStatusPackageSuccess,
-    EditStatusPackageFailure,
     loginActions,
     LoginRequest,
     LoginSuccess,
     LoginFailure,
     GetUserInfoSuccess,
     GetUserInfoFailure,
+    ChangeStatusPackageRequest,
+    ChangeStatusPackageSuccess,
+    ChangeStatusPackageFailure,
+    OPEN_MODAL_LOGIN,
 } from './actions';
 import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -46,6 +47,7 @@ import { CreatePaymentFormComponent } from '@components/create-payment-form/crea
 import { ReadOrderOrderDetailComponent } from '@components/read-order-order-detail/read-order-order-detail.component';
 import { ReadOrderPaymentComponent } from '@components/read-order-payment/read-order-payment.component';
 import { AuthService } from '@services/auth/auth.service';
+import { LoginComponent } from '@modules/login/login.component';
 
 @Injectable()
 export class PackageEffects {
@@ -89,6 +91,18 @@ export class PackageEffects {
         ), { dispatch: false });
 
 
+        openModalLogin$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(OPEN_MODAL_LOGIN),
+            tap((action) => {
+                this.modalRef = this.modalService.open(LoginComponent, {
+                    backdrop: false,
+                    size: 'xl'
+                });
+            })
+        ), { dispatch: false });
+
+
     createPackage$ = createEffect(() => this.actions$.pipe(
         ofType(packageActions.CREATE_PACKAGE_REQUEST),
         map((action: CreatePackageRequest) => action.payload),
@@ -103,6 +117,24 @@ export class PackageEffects {
                     ];
                 }),
                 catchError((err) => of(new CreatePackageFailure(err)))
+            )
+        })
+    ));
+
+
+    disablePackage$ = createEffect(() => this.actions$.pipe(
+        ofType(packageActions.CHANGE_STATUS_PACKAGE_REQUEST),
+        map((action: ChangeStatusPackageRequest) => action.payload),
+        switchMap((pack) => {
+            return this.apiService.disablePackage(pack).pipe(
+                mergeMap((packResolved) => {
+                    this.modalRef.close();
+                    return [
+                        new ChangeStatusPackageSuccess(packResolved),
+                        new GetAllPackagesRequest(),
+                    ];
+                }),
+                catchError((err) => of(new ChangeStatusPackageFailure(err)))
             )
         })
     ));

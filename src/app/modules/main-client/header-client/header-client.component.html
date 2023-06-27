@@ -1,0 +1,57 @@
+<!-- <nav class="navbar style-nav p-0">
+    <div class="row style-nav">
+        <div class="col-2">
+            <a class="navbar-brand d-flex justify-content-center" href="client/main">
+                <img src="https://images.vexels.com/media/users/3/149236/raw/2969c7b5e29161e037c8a014e71ae2a5-plantilla-de-logotipo-de-agencia-de-viajes.jpg"
+                    alt="Logo" width="60" height="40" class="d-inline-block align-text-top">
+                TuristiK
+            </a>
+        </div>
+        <div class="col-10 d-flex justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="btn btn-outline-secondary color-text">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-secondary color-text">Pedidos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-secondary color-text">Opinion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-secondary color-text" (click)="logout()">Cerrar sesion</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav> -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light width-nav">
+    <div class="container">
+        <a class="navbar-brand" href="/">Start Bootstrap</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+
+        <div class="col-10 d-flex justify-content-end">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="btn btn-outline-secondary color-text">Inicio</a>
+                </li>
+                <li *ngIf="userLogin != null" class="nav-item">
+                    <a class="btn btn-outline-secondary color-text">Pedidos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-secondary color-text">Opinion</a>
+                </li>
+                <li *ngIf="userLogin != null" class="nav-item">
+                    <a class="btn btn-outline-secondary color-text" (click)="logout()">Cerrar sesion</a>
+                </li>
+                <li *ngIf="userLogin == null" class="nav-item">
+                    <a class="btn btn-outline-secondary color-text" (click)="openModalLogin()">Iniciar sesion</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+</nav>

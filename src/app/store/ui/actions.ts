@@ -19,7 +19,12 @@ export enum toggleActions {
 }
 
 export const OPEN_MODAL_CREATE_PACKAGE: string = '[PACKAGE] OPEN_MODAL_CREATE_PACKAGE';
-export const OPEN_MODAL_DETAILS_PACKAGE: string = '[PACKAGE] OPEN_MODAL_DETAILS_PACKAGE'
+
+
+export const OPEN_MODAL_LOGIN: string = '[PACKAGE] OPEN_MODAL_LOGIN';
+
+
+export const OPEN_MODAL_DETAILS_PACKAGE: string = '[PACKAGE] OPEN_MODAL_DETAILS_PACKAGE';
 export const GET_ALL_PACKAGES_REQUEST: string = '[PACKAGE] GET_ALL_PACKAGES_REQUEST';
 export const GET_ALL_PACKAGES_SUCCESS: string = '[PACKAGE] GET_ALL_PACKAGES_SUCCESS';
 export const GET_ALL_PACKAGES_FAILURE: string = '[PACKAGE] GET_ALL_PACKAGES_FAILURE';
@@ -30,9 +35,6 @@ export const CREATE_PACKAGE_REQUEST: string = '[PACKAGE] CREATE_PACKAGE_REQUEST'
 export const CREATE_PACKAGE_SUCCESS: string = '[PACKAGE] CREATE_PACKAGE_SUCCESS';
 export const CREATE_PACKAGE_FAILURE: string = '[PACKAGE] CREATE_PACKAGE_FAILURE';
 
-export const CHANGE_STATUS_PACKAGE_REQUEST: string = '[PACKAGE] CHANGE_STATUS_PACKAGE_REQUEST';
-export const CHANGE_STATUS_PACKAGE_SUCCESS: string = '[PACKAGE] CHANGE_STATUS_PACKAGE_SUCCESS';
-export const CHANGE_STATUS_PACKAGE_FAILURE: string = '[PACKAGE] CHANGE_STATUS_PACKAGE_FAILURE';
 
 export const EDIT_PACKAGE_REQUEST: string = '[PACKAGE] EDIT_PACKAGE_REQUEST';
 export const EDIT_PACKAGE_SUCCESS: string = '[PACKAGE] EDIT_PACKAGE_SUCCESS';
@@ -91,12 +93,21 @@ export enum packageActions {
 
   EDIT_PACKAGE_REQUEST = '[PACKAGE] EDIT_PACKAGE_REQUEST',
   EDIT_PACKAGE_SUCCESS = '[PACKAGE] EDIT_PACKAGE_SUCCESS',
-  EDIT_PACKAGE_FAILURE = '[PACKAGE] EDIT_PACKAGE_FAILURE'
+  EDIT_PACKAGE_FAILURE = '[PACKAGE] EDIT_PACKAGE_FAILURE',
+  
+  CHANGE_STATUS_PACKAGE_REQUEST = '[PACKAGE] CHANGE_STATUS_PACKAGE_REQUEST',
+  CHANGE_STATUS_PACKAGE_SUCCESS = '[PACKAGE] CHANGE_STATUS_PACKAGE_SUCCESS',
+  CHANGE_STATUS_PACKAGE_FAILURE = '[PACKAGE] CHANGE_STATUS_PACKAGE_FAILURE',
 }
 
 export class OpenModalDetailsPackage implements Action {
   readonly type: string = OPEN_MODAL_DETAILS_PACKAGE;
   constructor(public payload?: Package) {}
+}
+
+export class OpenModalLogin implements Action {
+  readonly type: string = OPEN_MODAL_LOGIN;
+  constructor() {}
 }
 
 // PACKAGES LIST -------------------------------------------------------------
@@ -136,6 +147,26 @@ export class CreatePackageFailure implements Action {
   readonly type: string = packageActions.CREATE_PACKAGE_FAILURE;
   constructor(public payload: string) { }
 }
+// DISSABLE PACKAGES
+
+export class ChangeStatusPackageRequest implements Action {
+  readonly type = packageActions.CHANGE_STATUS_PACKAGE_REQUEST;
+
+  constructor(public payload: Package) {} // Aquí pasamos el id del paquete como carga útil
+}
+
+export class ChangeStatusPackageSuccess implements Action {
+  readonly type = packageActions.CHANGE_STATUS_PACKAGE_SUCCESS;
+
+  constructor(public payload: any) {} // Aquí pasamos el paquete deshabilitado como carga útil
+}
+
+export class ChangeStatusPackageFailure implements Action {
+  readonly type = packageActions.CHANGE_STATUS_PACKAGE_FAILURE;
+
+  constructor(public payload: string) {} // Aquí pasamos cualquier error como carga útil
+}
+// EDIT PACKAGES
 
 export class EditPackageRequest implements Action {
   readonly type: string = packageActions.EDIT_PACKAGE_REQUEST;
@@ -187,25 +218,6 @@ export enum orderActions {
 
 // END PACKAGES EDIT--------------------------------------------------------
 
-
-// PACKAGES DISABLE ACTIONS ------------------------------------------------
-export class EditStatusPackageRequest implements Action {
-  readonly type: string = EDIT_PACKAGE_REQUEST;
-  constructor(public payload: Package) {}
-}
-
-export class EditStatusPackageSuccess implements Action {
-  readonly type: string = EDIT_PACKAGE_SUCCESS;
-  readonly string = OPEN_MODAL_CREATE_PACKAGE;
-  constructor(public payload: any) {}
-}
-
-export class EditStatusPackageFailure implements Action {
-  readonly type: string = EDIT_PACKAGE_FAILURE;
-  constructor(public payload: string) {}
-}
-
-// PACKAGES DISABLE ACTIONS END -----------------------------------------
 // PACKAGES END--------------------------------------------------------
 
 
@@ -692,6 +704,9 @@ export type UiAction =
   | CreatePackageRequest
   | CreatePackageSuccess
   | CreatePackageFailure
+  | ChangeStatusPackageRequest
+  | ChangeStatusPackageFailure
+  | ChangeStatusPackageSuccess
   //<--------------------->
   //<---ORDERS--->
   | GetAllOrdersSuccess

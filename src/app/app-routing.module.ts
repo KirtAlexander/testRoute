@@ -15,78 +15,89 @@ import { OrdersComponent } from '@pages/orders/orders.component';
 import { CostumersComponent } from '@pages/costumers/costumers.component';
 import { EmployeesComponent } from '@pages/employees/employees.component';
 import { UsersComponent } from '@pages/users/users.component';
+import { MainClientComponent } from '@modules/main-client/main-client.component';
+import { HomeClientComponent } from '@modules/main-client/home-client/home-client.component';
+import { homedir } from 'os';
 
 const routes: Routes = [
     {
-      path: '',
+      path: 'main/admin',
       component: MainComponent,
       //canActivate: [NonAuthGuard],
       canActivate: [AuthGuard],
       canActivateChild: [AuthGuard],
       children: [
-          {
-              path: '',
-              // canActivate: [NonAuthGuard],
-              component: DashboardComponent
-          },
-          {
-              path: 'profile',
-              // canActivate: [NonAuthGuard],
-              component: ProfileComponent
-          },
-          {
-              path: 'Paquetes',
-              // canActivate: [AuthGuard],
-              component: PackagesComponent
-          },
-          {
-              path: 'Roles',
-              // canActivate: [AuthGuard],
-              component: RolesComponent
-          },
-          {
-              path: 'Pedidos',
-              // canActivate: [AuthGuard],
-              component: OrdersComponent
-          },
-          {   path: 'Clientes',
-              // canActivate: [AuthGuard],
-              component: CostumersComponent
-          },
-          {
-              path: 'Empleados',
-              // canActivate: [AuthGuard],
-              component: EmployeesComponent
-          },
-          {
-              path: 'Usuarios',
-              // canActivate: [AuthGuard],
-              component: UsersComponent
-          },
+        // Rutas para el rol de Administrador
+        {
+          path: '',
+          component: DashboardComponent
+        },
+        {
+          path: 'profile',
+          component: ProfileComponent
+        },
+        {
+          path: 'Paquetes',
+          component: PackagesComponent
+        },
+        {
+          path: 'Roles',
+          component: RolesComponent
+        },
+        {
+          path: 'Pedidos',
+          component: OrdersComponent
+        },
+        {
+          path: 'Clientes',
+          component: CostumersComponent
+        },
+        {
+          path: 'Empleados',
+          component: EmployeesComponent
+        },
+        {
+          path: 'Usuarios',
+          component: UsersComponent
+        }
       ]
     },
     {
-        path: 'login',
-        component: LoginComponent,
-        canActivate: [NonAuthGuard]
+      path: 'main/client',
+      component: MainClientComponent,
+      canActivate: [AuthGuard],
+      canActivateChild: [AuthGuard],
+      children: [
+        // Rutas para el rol de Cliente
+        {
+          path: '',
+          component: HomeClientComponent
+        },
+      ]
     },
     {
-        path: 'register',
-        component: RegisterComponent,
-        canActivate: [NonAuthGuard]
+      path: 'login',
+      component: LoginComponent,
+      canActivate: [NonAuthGuard]
     },
     {
-        path: 'forgot-password',
-        component: ForgotPasswordComponent,
-        canActivate: [NonAuthGuard]
+      path: 'register',
+      component: RegisterComponent,
+      canActivate: [NonAuthGuard]
     },
     {
-        path: 'recover-password',
-        component: RecoverPasswordComponent,
-        canActivate: [NonAuthGuard]
+      path: 'forgot-password',
+      component: ForgotPasswordComponent,
+      canActivate: [NonAuthGuard]
     },
-    {path: '**', redirectTo: ''}
-];
+    {
+      path: 'recover-password',
+      component: RecoverPasswordComponent,
+      canActivate: [NonAuthGuard]
+    },
+    { path: '**', redirectTo: 'client/main' }
+  ];
+  
 
 @NgModule({
     imports: [RouterModule.forRoot(routes, {})],

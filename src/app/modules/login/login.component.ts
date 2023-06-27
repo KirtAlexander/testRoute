@@ -100,9 +100,9 @@ export class LoginComponent implements OnInit {
 
                 var log = JSON.parse(localStorage.getItem('TokenPayload'));
                 if (log['role'] == 'Administrador') {
-                    this.router.navigate(['/']);
+                    this.router.navigate(['/main/admin']);
                 } else if (log['role'] == 'Cliente') {
-                    this.router.navigate(['/Clientes']);
+                    this.router.navigate(['/main/client']);
                 }
 
                 this.toastr.success(this.token.message);
@@ -110,5 +110,5 @@ export class LoginComponent implements OnInit {
                 this.toastr.error(this.token.message);
             }
         }
-    }
+      }
 }

@@ -122,6 +122,6 @@ export class AppService {
         this.user = null;
         await this.store.dispatch(new GetUserInfoRequest(this.user));
 
-        this.router.navigate(['/login']);
+        this.router.navigate(['/main/client']);
     }
 }
